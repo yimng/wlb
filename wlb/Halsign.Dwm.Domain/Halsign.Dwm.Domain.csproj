@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Users\ShawnWang\Desktop\wlb\Citrix.Dwm.Domain.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09ECF505-5510-4641-8D99-BBF2FAA2BCE7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Halsign.Dwm.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <ApplicationVersion>6.5.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Halsign.DWM</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Data" />
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="XenServer">
+      <HintPath>lib\XenServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Framework\QueueWorker.cs" />
+    <Compile Include="Domain\AutoRecommendation.cs" />
+    <Compile Include="Domain\DwmAEAnalyzer.cs" />
+    <Compile Include="Domain\DwmAEBase.cs" />
+    <Compile Include="Domain\DwmAEHost.cs" />
+    <Compile Include="Domain\DwmAEHostEvacuator.cs" />
+    <Compile Include="Domain\DwmAEHostRelocateRecommendation.cs" />
+    <Compile Include="Domain\MemoryScoringType.cs" />
+    <Compile Include="Domain\DwmAEHostScorer.cs" />
+    <Compile Include="Domain\DwmAEOptimizer.cs" />
+    <Compile Include="Domain\DwmAEVirtualMachine.cs" />
+    <Compile Include="Domain\RecommendationStatus.cs" />
+    <Compile Include="Domain\MoveRecommendation.cs" />
+    <Compile Include="Domain\MoveRecommendationStatus.cs" />
+    <Compile Include="Domain\ResourceToOptimize.cs" />
+    <Compile Include="Domain\OptimizationSeverity.cs" />
+    <Compile Include="Domain\AutoBalanceAggressiveness.cs" />
+    <Compile Include="Domain\PerformanceIssueType.cs" />
+    <Compile Include="Domain\DwmAnalysisEngine.cs" />
+    <Compile Include="Domain\ZeroScoreReason.cs" />
+    <Compile Include="Domain\CloudVMPlacement.cs" />
+    <Compile Include="Domain\Crypto.cs" />
+    <Compile Include="Domain\DwmNetwork.cs" />
+    <Compile Include="Domain\DwmNetworkCollection.cs" />
+    <Compile Include="Domain\DwmVif.cs" />
+    <Compile Include="Domain\DwmVifCollection.cs" />
+    <Compile Include="Domain\DwmHostVM.cs" />
+    <Compile Include="Domain\WlbAuditLog.cs" />
+    <Compile Include="Domain\WlbAuditLogEntry.cs" />
+    <Compile Include="Domain\WlbAuditLogEntryCollection.cs" />
+    <Compile Include="Domain\WlbAuditLogProcessor.cs" />
+    <Compile Include="Domain\WlbReport.cs" />
+    <Compile Include="Domain\WlbReports.cs" />
+    <Compile Include="Domain\WlbSetOptModeTaskProcessor.cs" />
+    <Compile Include="Domain\DwmAssignedPool.cs" />
+    <Compile Include="Domain\DwmAssignedPoolCollection.cs" />
+    <Compile Include="Domain\DwmAsyncVmActions.cs" />
+    <Compile Include="Domain\AuditEventType.cs" />
+    <Compile Include="Domain\AuditEventStatus.cs" />
+    <Compile Include="Domain\MoveRecommendationType.cs" />
+    <Compile Include="Domain\DwmAudit.cs" />
+    <Compile Include="Domain\DwmHypervisorType.cs" />
+    <Compile Include="Domain\DiscoveryStatus.cs" />
+    <Compile Include="Domain\DwmStatus.cs" />
+    <Compile Include="Domain\PowerStatus.cs" />
+    <Compile Include="Domain\DwmBase.cs" />
+    <Compile Include="Domain\DwmAverageMetric.cs" />
+    <Compile Include="Domain\DwmAverageMetricHost.cs" />
+    <Compile Include="Domain\DwmAverageMetricVM.cs" />
+    <Compile Include="Domain\DwmHostAverageMetric.cs" />
+    <Compile Include="Domain\OptimizationMode.cs" />
+    <Compile Include="Domain\Threshold.cs" />
+    <Compile Include="Domain\HostThreshold.cs" />
+    <Compile Include="Domain\DwmPoolBase.cs" />
+    <Compile Include="Domain\WlbScheduleProcessor.cs" />
+    <Compile Include="Domain\DwmStorageRepository.cs" />
+    <Compile Include="Domain\DwmStorageRepositoryCollection.cs" />
+    <Compile Include="Domain\DwmPif.cs" />
+    <Compile Include="Domain\DwmPifCollection.cs" />
+    <Compile Include="Domain\DwmPbd.cs" />
+    <Compile Include="Domain\DwmPbdCollection.cs" />
+    <Compile Include="Domain\DwmVbd.cs" />
+    <Compile Include="Domain\DwmVbdCollection.cs" />
+    <Compile Include="Domain\DwmVirtualMachine.cs" />
+    <Compile Include="Domain\DwmVirtualMachineCollection.cs" />
+    <Compile Include="Domain\DwmHost.cs" />
+    <Compile Include="Domain\DwmHostCollection.cs" />
+    <Compile Include="Domain\DwmHostMetric.cs" />
+    <Compile Include="Domain\DwmHostMetricCollection.cs" />
+    <Compile Include="Domain\DwmBaseCollection`1.cs" />
+    <Compile Include="Domain\DwmPool.cs" />
+    <Compile Include="Domain\DwmPoolCollection.cs" />
+    <Compile Include="Domain\DwmVmAverageMetric.cs" />
+    <Compile Include="Domain\DwmVmMovement.cs" />
+    <Compile Include="Domain\DwmVmMovementCollection.cs" />
+    <Compile Include="Domain\ITaskProcessor.cs" />
+    <Compile Include="Domain\DeviceMetric.cs" />
+    <Compile Include="Domain\DwmVmMetric.cs" />
+    <Compile Include="Domain\DwmVmMetricCollection.cs" />
+    <Compile Include="Domain\WlbTask.cs" />
+    <Compile Include="Domain\WlbTaskCollection.cs" />
+    <Compile Include="Domain\WlbTaskAction.cs" />
+    <Compile Include="Domain\WlbActionType.cs" />
+    <Compile Include="Domain\WlbTriggerState.cs" />
+    <Compile Include="Domain\WlbTriggerType.cs" />
+    <Compile Include="Domain\TriggerDaysOfWeek.cs" />
+    <Compile Include="Domain\WlbTaskTrigger.cs" />
+    <Compile Include="Domain\Properties\Settings.cs" />
+    <Compile Include="Collectors\ICollector.cs" />
+    <Compile Include="Collectors\CantBootReason.cs" />
+    <Compile Include="Collectors\ICollectorActions.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Halsign.Dwm.Framework\Halsign.Dwm.Framework.csproj">
+      <Project>{e7d929c8-5bff-4d7a-9e55-b2ffae3b337e}</Project>
+      <Name>Halsign.Dwm.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <!--Project was exported from assembly: C:\Users\ShawnWang\Desktop\wlb\DwmDataColHost.exe-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EC39D587-A584-4D90-A2CD-F53A3641FB1D}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>DwmDataColHost</AssemblyName>
+    <ApplicationVersion>6.5.0.0</ApplicationVersion>
+    <RootNamespace>DwmDataColHost</RootNamespace>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Halsign.Dwm.DataCollectionMgmt\Halsign.Dwm.DataCollectionMgmt.csproj">
+      <Project>{dfdc7834-a474-421e-bfe6-c13cf449d427}</Project>
+      <Name>Halsign.Dwm.DataCollectionMgmt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Halsign.Dwm.Domain\Halsign.Dwm.Domain.csproj">
+      <Project>{09ecf505-5510-4641-8d99-bbf2faa2bce7}</Project>
+      <Name>Halsign.Dwm.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Halsign.Dwm.Framework\Halsign.Dwm.Framework.csproj">
+      <Project>{e7d929c8-5bff-4d7a-9e55-b2ffae3b337e}</Project>
+      <Name>Halsign.Dwm.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

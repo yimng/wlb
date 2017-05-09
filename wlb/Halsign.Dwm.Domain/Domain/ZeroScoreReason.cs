@@ -1,0 +1,48 @@
+using System;
+namespace Halsign.DWM.Domain
+{
+	public enum ZeroScoreReason
+	{
+		None,
+		Cpu = 1000,
+		Memory,
+		Disk,
+		Network,
+		DiskRead,
+		DiskWrite,
+		NetworkRead,
+		NetworkWrite,
+		LoadAverage,
+		CpuOvercommit,
+		NotEnoughCpus,
+		HostExcluded,
+		RunstateFullContention,
+		RunstateConcurrencyHazard,
+		RunstatePartialContention,
+		HandleInvalid = 2001,
+		NoHAPlan,
+		HAOperationWouldBreakPlan,
+		HostOffline,
+		HostStillBooting,
+		InternalError,
+		NoHostAvailable,
+		AuthenticationFailure,
+		InvalidSession,
+		SrHasNoPbds,
+		VmBadPowerState,
+		VmRequiresSr,
+		VmRequiresNetwork,
+		VmMissingDrivers,
+		HostNotEnoughFreeMemory,
+		BackendFailure72,
+		BackendFailure140,
+		BackendFailure222,
+		BackendFailure225,
+		SocketException,
+		WebException,
+		GeneralException,
+		HostDoesNotExist,
+		NoMetrics = 3000,
+		NotLicensed
+	}
+}

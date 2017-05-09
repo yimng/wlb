@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Users\ShawnWang\Desktop\wlb\Citrix.Dwm.Communication2.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A3B989CD-1C80-4A3C-9F0F-236FDA130183}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Halsign.Dwm.Communication2</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <ApplicationVersion>6.5.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Halsign.DWM.Communication2</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="ServiceStack.Common">
+      <HintPath>lib\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>lib\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.ServiceInterface">
+      <HintPath>lib\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack">
+      <HintPath>lib\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authentication2.cs" />
+    <Compile Include="Pair.cs" />
+    <Compile Include="PoolConfiguration.cs" />
+    <Compile Include="PoolConfigurationResponse.cs" />
+    <Compile Include="PoolConfigurationService.cs" />
+    <Compile Include="Diagnostics.cs" />
+    <Compile Include="DiagnosticsResponse.cs" />
+    <Compile Include="DiagnosticsService.cs" />
+    <Compile Include="Pool.cs" />
+    <Compile Include="PoolInfo.cs" />
+    <Compile Include="PoolResponse.cs" />
+    <Compile Include="PoolService.cs" />
+    <Compile Include="VMPlacement.cs" />
+    <Compile Include="Host.cs" />
+    <Compile Include="VMPlacementResponse.cs" />
+    <Compile Include="RecommendationService.cs" />
+    <Compile Include="Optimization.cs" />
+    <Compile Include="MoveVM.cs" />
+    <Compile Include="OptimizationResponse.cs" />
+    <Compile Include="OptimizationService.cs" />
+    <Compile Include="RequiredAttribute.cs" />
+    <Compile Include="RestWebServiceHost.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="WlbServiceBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Halsign.Dwm.Domain\Halsign.Dwm.Domain.csproj">
+      <Project>{09ecf505-5510-4641-8d99-bbf2faa2bce7}</Project>
+      <Name>Halsign.Dwm.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Halsign.Dwm.Framework\Halsign.Dwm.Framework.csproj">
+      <Project>{e7d929c8-5bff-4d7a-9e55-b2ffae3b337e}</Project>
+      <Name>Halsign.Dwm.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

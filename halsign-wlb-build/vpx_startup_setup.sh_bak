@@ -1,0 +1,505 @@
+#!/bin/bash
+#
+#
+# Sets up this Halsign VPX on first-boot
+#
+# On Redhat systems this file would go in the /etc/rc.d/init.d directory (make
+# sure it's marked executable after copying it there), and then the command:
+#
+#       'chkconfig vpx_startup_setup on'
+#
+# can be used to tell the system to run it on startup.
+#
+# chkconfig: - 80 20
+# description: vpx_startup_setup is the script for setting up the VPX on first-boot.
+
+wlbpath="/opt/citrix/wlb/"
+wlbconfpath=$wlbpath"wlb.conf"
+wlblogdir="/var/log/wlb/"
+logfile=$wlblogdir"wlb_install_log.log"
+touchfile="/etc/init.d/vpx_startup_setup_done"
+stunnel_jail="/usr/local/var/run/stunnel/"
+pg_conf="/var/lib/pgsql/9.0/data/postgresql.conf"
+
+function show_eula()
+{
+	clear
+	echo -e "\033[44;37;1mHalsign Workload Balancing Virtual Appliance - End User License Agreement        \033[0m"
+	
+	echo ""	
+	echo "--------------------------------------------------------------------"
+	echo ""
+	cat $wlbpath"eula.txt"
+	echo ""
+	echo "--------------------------------------------------------------------"	
+	local resp=""
+	while true; do
+		read -p "Accept the terms in License Agreement? (yes/no): " resp
+		resp=`echo $resp | tr "[:upper:]" "[:lower:]"`
+		if [ "$resp" == "y" ] || [ "$resp" == "yes" ]; then #accepted, continue with the configuration
+			break;		
+		elif [ "$resp" == "n" ] || [ "$resp" == "no" ]; then #did not accept, ask if vpx should be shut down
+			shutdown=""
+			while true; do
+				read -p "Shutdown virtual appliance? (yes/no): " shutdown
+				shutdown=`echo $shutdown | tr "[:upper:]" "[:lower:]"`
+				if [ "$shutdown" == "y" ] || [ "$shutdown" == "yes" ]; then
+					echo "Shutting down..."
+					shutdown -h now
+				elif [ "$shutdown" == "n" ] || [ "$shutdown" == "no" ]; then
+					break
+				else
+					echo "Type 'yes' or 'no'."
+				fi
+			done
+		else
+			echo "Type 'yes' or 'no'."
+		fi
+	done
+}
+
+# if /etc/init.d/vpx_startup_setup_done exists do nothing
+# deleting this file manually will wreak havoc, so please don't.
+if [ -f $touchfile ]
+then
+	clear
+	echo -e "\033[44;37;1mHalsign Workload Balancing Virtual Appliance                                     \033[0m"
+	echo ""
+	#run stunnel
+	if [ -f /usr/sbin/stunnel ] && [ -f /etc/stunnel/stunnel.conf ]; then
+		/usr/sbin/stunnel
+	fi
+	sleep 2
+	echo ""
+	exit 0;
+	
+fi
+
+#show eula
+show_eula;
+
+mkdir -p $wlblogdir
+
+clear
+echo -e "\033[44;37;1mHalsign Workload Balancing Virtual Appliance                                     \033[0m"
+echo ""
+
+#delete database folder if it exists
+#This assumes that configuration was interrupted before completion previously
+rm -rf /var/lib/pgsql/9.0/data
+
+echo "Welcome to the Virtual Appliance configuration wizard."
+echo ""
+echo "Choose a root password for this virtual machine.  This password"
+echo "will only be used for appliance configuration or maintenance."
+
+# configure root password
+echo ""
+while ! passwd ; do : ; done
+
+# configure network
+clear
+echo -e "\033[44;37;1mHalsign Workload Balancing Virtual Appliance                                     \033[0m"
+echo ""
+
+echo "Answer the following questions to configure networking:"
+
+networkdone="n"
+while [ "$networkdone" == "n" ] || [ "$networkdone" == "N" ]
+do
+	# ask user for hostname
+	echo ""
+	echo "Choose a short hostname for this virtual machine."
+echo	""
+	read -p "Specify a hostname: " hn
+	
+	# ask user for domain name	
+	read -p "Enter the domain suffix for this machine. e.g. mydomain.com: " dn
+		
+	# ask if user wants to use DHCP
+	dhcp=""
+	while [ "$dhcp" != "y" ] && [ "$dhcp" != "Y" ] && [ "$dhcp" != "n" ] && [ "$dhcp" != "N" ]
+	do		
+		read -p "Do you want to use DHCP to configure the network settings? (y/n): " dhcp
+		echo ""
+	done
+
+	# configure static IP if necessary
+	if [[ $dhcp =~ "[Nn]" ]]; then
+		read -p "Specify an IP address: " ip
+		read -p "    Specify a Netmask: " netm
+		read -p "    Specify a Gateway: " gw
+	fi
+	
+	# output all network input
+	echo ""
+clear
+echo -e "\033[44;37;1mHalsign Workload Balancing Virtual Appliance                                     \033[0m"
+echo ""
+echo "Confirm your network settings:"
+echo ""
+
+	echo "Hostname: $hn"
+	echo "Domain name: $dn"
+	if [[ $dhcp =~ "[Nn]" ]]; then
+		echo "DHCP: No"
+		echo "IP address: $ip"
+		echo "Netmask: $netm"
+		echo "Gateway: $gw"
+	else
+		echo "DHCP: Yes"
+	fi
+	
+	# ask user if happy
+	echo ""
+	resp=""
+	while [ "$resp" != "y" ] && [ "$resp" != "Y" ] &&  [ "$resp" != "n" ] &&  [ "$resp" != "N" ]
+	do
+		read -p "Are these settings correct? (y/n): " resp		
+	done
+	networkdone=$resp
+done
+
+
+# write network details to /etc/sysconfig/network-scripts/ifcfg-eth0
+echo "DEVICE=eth0" > /etc/sysconfig/network-scripts/ifcfg-eth0
+
+if [[ $dhcp =~ "[Yy]" ]]; then
+	echo "BOOTPROTO=dhcp" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+	echo "ONBOOT=yes" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+else
+	echo "BOOTPROTO=none" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+	echo "ONBOOT=yes" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+	echo "NETMASK=$netm" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+	echo "IPADDR=$ip" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+fi
+
+# set hostname in /etc/sysconfig/network so it comes back after a restart
+echo "NETWORKING=yes" > /etc/sysconfig/network
+echo "NETWORKING_IPV6=no" >> /etc/sysconfig/network
+echo "HOSTNAME=$hn" >> /etc/sysconfig/network
+
+# set the hostname for this session.
+/bin/hostname "$hn"
+
+# set the gateway in /etc/sysconfig/network
+if [[ $dhcp =~ "[Nn]" ]]; then
+	echo "GATEWAY=$gw" >> /etc/sysconfig/network
+fi
+
+#delete eth1
+rm -f /etc/sysconfig/network-scripts/ifcfg-eth1
+# refresh networking
+service network restart
+
+#add swapfile
+echo ""
+
+echo -n "Creating swap partition...  "
+mkswap /swapfile >> $logfile 2>&1
+swapon /swapfile >> $logfile 2>&1
+echo "/swapfile                swap                   swap    defaults        0 0" >> /etc/fstab
+echo "[  OK  ]"
+
+# get ipaddress
+ip=`ifconfig  | grep -m1 'inet addr:'| cut -d: -f2 | awk '{ print $1}'`
+
+# add the hostname to hosts
+
+echo "127.0.0.1	localhost.localdomain localhost" > /etc/hosts
+echo "$ip $hn.$dn $hn" >> /etc/hosts
+echo "::1 localhost6.localdomain6 localhost6" >> /etc/hosts
+
+###################################
+#scripts to start wlb services will go here
+###################################
+
+echo ""
+
+clear
+echo -e "\033[44;37;1mWorkload Balancing Virtual Appliance                                     \033[0m"
+echo ""
+
+# postgres bits
+
+echo -n "Initializing database...  "
+service postgresql-9.0 initdb > $logfile
+echo "[  OK  ]"
+
+# change to trust mode to do db operations
+sed -i 's/ident/trust/g' /var/lib/pgsql/9.0/data/pg_hba.conf
+#sed -i '/127/s/ident/password/g' /var/lib/pgsql/9.0/data/pg_hba.conf
+#set the proper search path
+sed -i -e '/search/s/public/"WorkloadBalancing"/g' $pg_conf -e '/^#search/s/#//'
+#get total memory of WLB vpx
+mem=`free -t -m | grep "Mem" | awk '{ print $2}'`
+let shared_buffers=$(echo "$mem/4")
+let wal_buffers=$(echo "$shared_buffers/32")
+let effective_cache=$(echo "$mem/2")
+#set postgresql server profermance turning property: 
+#shared_buffers, wal_buffers, effective_cache_size, checkpoint_segments, and log_line_prefix
+sed -i -e "s/shared_buffers = 32MB/shared_buffers = ${shared_buffers}MB/; s/wal_buffers = 64kB/wal_buffers = ${wal_buffers}MB/; /^#wal_buffers/s/#//; s/effective_cache_size = 128MB/effective_cache_size = ${effective_cache}MB/; /^#effective_cache_size/s/#//; s/checkpoint_segments = 3/checkpoint_segments = 10/; /^#checkpoint_segments/s/#//; s/checkpoint_completion_target = 0.5/checkpoint_completion_target = 0.9/; /^#checkpoint_completion_target/s/#//; s/log_line_prefix = ''/log_line_prefix = '%t:%r:%u@%d:[%p]:'/; /^#log_line_prefix/s/#//;" $pg_conf
+
+#change default logging configurations. log rotation will be handled by logrotate
+sed -i -e "s/\(log_filename\).*/\1 = 'postgresql.log'/" $pg_conf
+sed -i -e "s/\(log_truncate_on_rotation.*\)/#\1/" $pg_conf
+sed -i -e "s/\(log_rotation_age\).*/\1 = 0/" $pg_conf
+sed -i -e "s/\(log_rotation_size\).*/\1 = 0/" $pg_conf
+
+#if wlb.conf has wlb_unittest replace it
+sed -i 's/WLB_UnitTest/WorkloadBalancing/g' $wlbconfpath
+
+# Next time VPX starts, make sure the database starts automatically
+chkconfig postgresql-9.0 on
+echo -n "Starting PostgreSQL database...  "
+service postgresql-9.0 start > $logfile
+echo "[  OK  ]"
+
+# Create postgres username and password based on input (or defaults)
+clear
+echo -e "\033[44;37;1mHalsign Workload Balancing Virtual Appliance                                     \033[0m"
+echo ""
+
+echo "Create a PostgreSQL user."
+echo "This user will be used for logging in to local PostgreSQL database server."
+echo ""
+read -t 1 -n 10000 discard
+read -p "User name (leave empty for default user name [postgres]): " username
+
+if [ "$username" == "" ]; then 
+	username="postgres"
+fi
+
+#read -p "Database initialization done. Press any key to continue..."
+
+echo ""
+dopass=1
+while [ $dopass -eq 1 ]
+do	
+	read -s -p "Enter password for $username: " pass1
+	LEN=$(echo ${#pass1})
+	if [ "$pass1" == "" ]; then
+		echo ""
+		echo "Password cannot be empty. Try again."
+		echo ""
+		continue;
+	fi
+	if [ $LEN -gt 48  ]; then
+		echo ""
+		echo "Password cannot be longer than 48 characters. Try again."
+		echo ""
+		continue;
+	fi
+	echo ""
+	read -s -p "Confirm: " pass2
+	echo ""	
+	if [ "$pass1" == "$pass2" ]; then
+		#change the db password
+		#disable the history expansion, so that it'll handle ! correctly
+		set +o histexpand
+		
+		#change the trust mode to password mode
+		sed -i 's/trust/password/g' /var/lib/pgsql/9.0/data/pg_hba.conf		
+		
+		echo ""
+		echo -n "Loading objects into database...  "
+
+		#set the encoding of db properly
+		sed -i -e '/CREATE DATABASE/s/;/ ENCODING=\x27UTF8\x27;/g' $wlbpath"wlb_db.out"
+		#change the ownerships to new user
+		sed -i '/connect/! s/postgres/'$username'/g' $wlbpath"wlb_db.out"
+		#then create the database
+		psql -Upostgres -f $wlbpath"wlb_db.out" >> $logfile 2>&1
+				
+		psql -Upostgres -c "ALTER USER $username WITH PASSWORD '$pass1'" >> $logfile 2>&1
+		
+		echo "[  OK  ]"		
+		
+		#restart db
+		echo -n "Restarting PostgreSQL server...  "
+		service postgresql-9.0 restart > $logfile
+		echo "[  OK  ]"
+		#re-enable history expansion
+		set -o histexpand
+		dopass=0
+	else
+		echo "Passwords do not match. Try again."
+		sleep 2
+	fi
+	
+done
+
+
+echo "Choose user name and password for Workload Balancing Server."
+dousername=1
+read -t 1 -n 10000 discard
+while [ $dousername -eq 1 ]
+do
+	echo ""
+	read -p "User name [default:wlbuser]: " username2
+	if [[ $username2 == *:* ]]
+	then
+		echo "User name cannot contain ':'. Try again."
+		continue;
+	fi
+	LEN=$(echo ${#username2})
+	if [ $LEN -gt 48  ]; then
+		echo ""
+		echo "User name cannot be longer than 48 characters. Try again."
+		continue;
+	fi
+	if [ "$username2" == "" ]; then 
+		username2="wlbuser"
+	fi
+	dousername=0
+done
+echo ""
+
+dopass=1
+while [ $dopass -eq 1 ]
+do
+	read -s -p "Enter password for $username2: " pass3
+	echo ""
+	if [ "$pass3" == "" ]; then
+		echo ""
+		echo "Password cannot be empty. Try again."
+		continue;
+	fi
+	LEN=$(echo ${#pass3})
+	if [ $LEN -gt 48  ]; then
+		echo ""
+		echo "Password cannot be longer than 48 characters. Try again."
+		continue;
+	fi
+	if [[ $pass3 == *:* ]]
+	then
+		echo ""
+		echo "Password cannot contain ':'. Try again."
+		continue;
+	fi
+	read -s -p "Confirm: " pass4	
+	if [ "$pass3" == "$pass4" ]; then		
+		dopass=0
+	else
+		sleep 1
+		echo ""
+		echo "Passwords do not match. Try again."
+	fi
+done
+echo ""
+
+validport=0
+while [ $validport -eq 0 ]
+do
+        echo ""
+        read -p "Enter the port for Workload Balancing Server [default:8012]: " wcfPort
+		#make sure the port entered is valid
+		#if empty assign to default, 8012
+        if [ "$wcfPort" == "" ]; then
+                wcfPort=8012
+                break;
+		#only contains number, and is within valid port range
+        elif [[ $wcfPort =~ ^[0-9]+$ ]]; then			
+			if [ "$wcfPort" == "443" ]; then #reserve 443 for restful web service
+				echo "Port $wcfPort is used by WLB RESTful Web Service. Choose another port."
+			elif [ $wcfPort -le 65535 ]; then
+					break;
+			fi			
+        else
+			echo "Port you entered is invalid."
+		fi
+done
+
+echo ""
+echo -n "Saving Workload Balancing Server settings...  "
+#run logrotate every 10 mins
+echo "*/10 * * * * root /usr/sbin/logrotate /etc/logrotate.conf" >> /etc/crontab
+cd $wlbpath
+#call the tool to handle passwords and stuff
+mono WlbConfig.exe  DBUsername=$username DBPassword=$pass1 WlbUsername=$username2 WlbPassword=$pass3 >> $logfile 2>&1
+
+#update the config file, to update port number, uri and hostnames
+#write port to stunnel.conf
+let connPort=$wcfPort+1
+let restPort=$connPort+1
+
+cat <<EOT >> /etc/stunnel/stunnel.conf
+[rest]
+accept = 443
+connect = $restPort
+
+[soap]
+accept = $wcfPort
+connect = $connPort
+
+EOT
+
+# Write WCF port and RESTful port to wlb.conf file
+sed -i 's#\(WcfServicePort\s*=\s*\)[0-9]*#\1'$connPort'#g' $wlbconfpath
+sed -i 's#\(RestHttpPort\s*=\s*\)[0-9]*#\1'$restPort'#g' $wlbconfpath
+#set use ssl flag to false, since secure layer will be handled by stunnel
+sed -i 's#\(WcfServiceUseSSL\s*=\s*\).*#\1'false'#g' $wlbconfpath
+echo "[  OK  ]"
+echo ""
+#modify iptables conf file to open access the port
+sed -i 's/8012/'$wcfPort'/g' /etc/sysconfig/iptables
+#and restart the service
+service iptables restart > /dev/null
+
+#this part is for self-signed certificate creation
+
+echo -n "Creating self-signed certificate...  "
+mkdir -p /etc/ssl/certs
+#make sure hostname isn't left empty
+if [ "$hn" == "" ]; then
+	hn=$ip
+fi
+
+# Write out key(.key) ertificate (.pem)
+openssl req -x509 -days 3650 -nodes -subj "/CN=$hn" -newkey rsa:1024 -keyout /etc/ssl/certs/server.key -out /etc/ssl/certs/server.pem >> $logfile 2>&1
+
+# Set permissions for root to RW for the cert files (pem & key) 
+chmod 600 /etc/ssl/certs/server.*
+
+#run stunnel
+mkdir -p $stunnel_jail
+
+# Set permissions RWE for everyone to /usr/local/var/run/stunnel/
+chmod 777 $stunnel_jail
+/usr/sbin/stunnel
+echo "[  OK  ]"
+echo ""
+
+echo -n "Importing reports into database...  "
+cd $wlbpath
+mono ReportImport.exe -v --version tampa -p ./Reports/tampa >> $logfile 2>&1
+mono ReportImport.exe -v --version creedence -p ./Reports/creedence >> $logfile 2>&1
+echo "[  OK  ]"
+
+echo ""
+
+rm -f $wlbpath"wlb_db.out"
+# touch /etc/init.d/vpx_startup_setup_done
+# so that this script doesn't run again
+touch $touchfile
+#deleting this file will prompt vpx to delete the entire database during next reboot
+#so this file should not be removed
+chmod 600 $touchfile
+
+#temporary directory for locks
+mkdir -p /tmp/wlb/
+chkconfig workloadbalancing on
+#Start the workloadbalancing services
+service workloadbalancing start
+sleep 3
+
+clear
+echo -e "\033[44;37;1mHalsign Workload Balancing Virtual Appliance                                     \033[0m"
+echo ""
+echo "Halsign Workload Balancing Virtual Appliance configuration is complete."
+echo ""
+echo "Use the following information to connect to Workload Balancing Server:"
+echo "    Address: $ip"
+echo "    Port: $wcfPort"
+echo "    WLB user name: $username2"
+echo ""

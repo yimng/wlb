@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <!--Project was exported from assembly: C:\Users\ShawnWang\Desktop\wlb\Citrix.Dwm.Communication.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{79D7521F-0F38-45CB-9560-1FAB594ED396}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Halsign.Dwm.Communication</AssemblyName>
+    <ApplicationVersion>6.5.0.0</ApplicationVersion>
+    <RootNamespace>Halsign.DWM.Communication</RootNamespace>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Data" />
+    <Reference Include="System" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommunicationBase.cs" />
+    <Compile Include="ScheduledTriggerType.cs" />
+    <Compile Include="ScheduledTriggerDaysOfWeek.cs" />
+    <Compile Include="ScheduledTask.cs" />
+    <Compile Include="ScheduledTaskTrigger.cs" />
+    <Compile Include="ScheduledTaskAction.cs" />
+    <Compile Include="ScheduledTaskActionType.cs" />
+    <Compile Include="GetSchedTaskRequest.cs" />
+    <Compile Include="GetSchedTaskResponse.cs" />
+    <Compile Include="SetSchedTaskRequest.cs" />
+    <Compile Include="SetSchedTaskResponse.cs" />
+    <Compile Include="DeleteSchedTaskRequest.cs" />
+    <Compile Include="DeleteSchedTaskResponse.cs" />
+    <Compile Include="GetSchedTaskActionTypeRequest.cs" />
+    <Compile Include="GetSchedTaskActionTypeResponse.cs" />
+    <Compile Include="IScheduledTask.cs" />
+    <Compile Include="WorkloadBalanceBase.cs" />
+    <Compile Include="WorkloadBalanceResult.cs" />
+    <Compile Include="XenServerRequest.cs" />
+    <Compile Include="XenServerResponse.cs" />
+    <Compile Include="SetConfigurationRequest.cs" />
+    <Compile Include="SetConfigurationResponse.cs" />
+    <Compile Include="GetConfigurationRequest.cs" />
+    <Compile Include="GetConfigurationResponse.cs" />
+    <Compile Include="GetHostConfigRequest.cs" />
+    <Compile Include="GetHostConfigResponse.cs" />
+    <Compile Include="SetHostConfigRequest.cs" />
+    <Compile Include="SetHostConfigResponse.cs" />
+    <Compile Include="VMZeroScoreReason.cs" />
+    <Compile Include="VmPlacementRecommendation.cs" />
+    <Compile Include="VMRecommendationsResponse.cs" />
+    <Compile Include="VMRecommendationsRequest.cs" />
+    <Compile Include="HostRecommendationsRequest.cs" />
+    <Compile Include="HostRecommendationsResponse.cs" />
+    <Compile Include="HostEvacuationRecommendation.cs" />
+    <Compile Include="PoolOptimizationRequest.cs" />
+    <Compile Include="PoolOptimizationReason.cs" />
+    <Compile Include="PoolOptimizationSeverity.cs" />
+    <Compile Include="PoolOptimizationRecommendation.cs" />
+    <Compile Include="PoolOptimizationResponse.cs" />
+    <Compile Include="ReportParameter.cs" />
+    <Compile Include="ReportRequest.cs" />
+    <Compile Include="ReportResponse.cs" />
+    <Compile Include="DiagnosticRequest.cs" />
+    <Compile Include="DiagnosticResponse.cs" />
+    <Compile Include="IARDServer.cs" />
+    <Compile Include="ARDServer.cs" />
+    <Compile Include="CertRetriever.cs" />
+    <Compile Include="WorkloadBalanceHost.cs" />
+    <Compile Include="MessageInspector.cs" />
+    <Compile Include="Authentication.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Halsign.Dwm.Domain\Halsign.Dwm.Domain.csproj">
+      <Project>{09ecf505-5510-4641-8d99-bbf2faa2bce7}</Project>
+      <Name>Halsign.Dwm.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Halsign.Dwm.Framework\Halsign.Dwm.Framework.csproj">
+      <Project>{e7d929c8-5bff-4d7a-9e55-b2ffae3b337e}</Project>
+      <Name>Halsign.Dwm.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

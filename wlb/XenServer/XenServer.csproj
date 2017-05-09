@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <!--Project was exported from assembly: C:\Users\ShawnWang\Desktop\wlb\XenServer.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DE1FD7E6-ED9D-4F54-AC7A-649A685AD6D8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>XenServer</AssemblyName>
+    <ApplicationVersion>6.1.0.1</ApplicationVersion>
+    <RootNamespace>XenAPI</RootNamespace>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="CookComputing.XmlRpcV2">
+      <HintPath>lib\CookComputing.XmlRpcV2.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="after_apply_guidance.cs" />
+    <Compile Include="after_apply_guidance_helper.cs" />
+    <Compile Include="IXenObject.cs" />
+    <Compile Include="XenObject`1.cs" />
+    <Compile Include="Auth.cs" />
+    <Compile Include="Blob.cs" />
+    <Compile Include="Bond.cs" />
+    <Compile Include="bond_mode.cs" />
+    <Compile Include="bond_mode_helper.cs" />
+    <Compile Include="cls.cs" />
+    <Compile Include="cls_helper.cs" />
+    <Compile Include="Console.cs" />
+    <Compile Include="console_protocol.cs" />
+    <Compile Include="console_protocol_helper.cs" />
+    <Compile Include="Crashdump.cs" />
+    <Compile Include="Data_source.cs" />
+    <Compile Include="DR_task.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="Proxy_Event.cs" />
+    <Compile Include="Events.cs" />
+    <Compile Include="Failure.cs" />
+    <Compile Include="FriendlyErrorNames.cs" />
+    <Compile Include="GPU_group.cs" />
+    <Compile Include="API_Version.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="Host.cs" />
+    <Compile Include="host_allowed_operations.cs" />
+    <Compile Include="host_allowed_operations_helper.cs" />
+    <Compile Include="Host_cpu.cs" />
+    <Compile Include="Host_crashdump.cs" />
+    <Compile Include="Host_metrics.cs" />
+    <Compile Include="Host_patch.cs" />
+    <Compile Include="HTTP.cs" />
+    <Compile Include="HTTP_actions.cs" />
+    <Compile Include="IMockWebProxy.cs" />
+    <Compile Include="ipv6_configuration_mode.cs" />
+    <Compile Include="ipv6_configuration_mode_helper.cs" />
+    <Compile Include="ip_configuration_mode.cs" />
+    <Compile Include="ip_configuration_mode_helper.cs" />
+    <Compile Include="Maps.cs" />
+    <Compile Include="Marshalling.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="Network.cs" />
+    <Compile Include="network_default_locking_mode.cs" />
+    <Compile Include="network_default_locking_mode_helper.cs" />
+    <Compile Include="network_operations.cs" />
+    <Compile Include="network_operations_helper.cs" />
+    <Compile Include="on_boot.cs" />
+    <Compile Include="on_boot_helper.cs" />
+    <Compile Include="on_crash_behaviour.cs" />
+    <Compile Include="on_crash_behaviour_helper.cs" />
+    <Compile Include="on_normal_exit.cs" />
+    <Compile Include="on_normal_exit_helper.cs" />
+    <Compile Include="PBD.cs" />
+    <Compile Include="PCI.cs" />
+    <Compile Include="PGPU.cs" />
+    <Compile Include="PIF.cs" />
+    <Compile Include="PIF_metrics.cs" />
+    <Compile Include="Pool.cs" />
+    <Compile Include="Pool_patch.cs" />
+    <Compile Include="primary_address_type.cs" />
+    <Compile Include="primary_address_type_helper.cs" />
+    <Compile Include="Proxy.cs" />
+    <Compile Include="Proxy_Session.cs" />
+    <Compile Include="Proxy_Auth.cs" />
+    <Compile Include="Proxy_Subject.cs" />
+    <Compile Include="Proxy_Role.cs" />
+    <Compile Include="Proxy_Task.cs" />
+    <Compile Include="Proxy_Pool.cs" />
+    <Compile Include="Proxy_Pool_patch.cs" />
+    <Compile Include="Proxy_VM.cs" />
+    <Compile Include="Proxy_VM_metrics.cs" />
+    <Compile Include="Proxy_VM_guest_metrics.cs" />
+    <Compile Include="Proxy_VMPP.cs" />
+    <Compile Include="Proxy_VM_appliance.cs" />
+    <Compile Include="Proxy_DR_task.cs" />
+    <Compile Include="Proxy_Host.cs" />
+    <Compile Include="Proxy_Host_crashdump.cs" />
+    <Compile Include="Proxy_Host_patch.cs" />
+    <Compile Include="Proxy_Host_metrics.cs" />
+    <Compile Include="Proxy_Host_cpu.cs" />
+    <Compile Include="Proxy_Network.cs" />
+    <Compile Include="Proxy_VIF.cs" />
+    <Compile Include="Proxy_VIF_metrics.cs" />
+    <Compile Include="Proxy_PIF.cs" />
+    <Compile Include="Proxy_PIF_metrics.cs" />
+    <Compile Include="Proxy_Bond.cs" />
+    <Compile Include="Proxy_VLAN.cs" />
+    <Compile Include="Proxy_SM.cs" />
+    <Compile Include="Proxy_SR.cs" />
+    <Compile Include="Proxy_VDI.cs" />
+    <Compile Include="Proxy_VBD.cs" />
+    <Compile Include="Proxy_VBD_metrics.cs" />
+    <Compile Include="Proxy_PBD.cs" />
+    <Compile Include="Proxy_Crashdump.cs" />
+    <Compile Include="Proxy_VTPM.cs" />
+    <Compile Include="Proxy_Console.cs" />
+    <Compile Include="Proxy_User.cs" />
+    <Compile Include="Proxy_Data_source.cs" />
+    <Compile Include="Proxy_Blob.cs" />
+    <Compile Include="Proxy_Message.cs" />
+    <Compile Include="Proxy_Secret.cs" />
+    <Compile Include="Proxy_Tunnel.cs" />
+    <Compile Include="Proxy_PCI.cs" />
+    <Compile Include="Proxy_PGPU.cs" />
+    <Compile Include="Proxy_GPU_group.cs" />
+    <Compile Include="Proxy_VGPU.cs" />
+    <Compile Include="Relation.cs" />
+    <Compile Include="ResponseTypes.cs" />
+    <Compile Include="Response`1.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="Secret.cs" />
+    <Compile Include="Session.cs" />
+    <Compile Include="SM.cs" />
+    <Compile Include="SR.cs" />
+    <Compile Include="storage_operations.cs" />
+    <Compile Include="storage_operations_helper.cs" />
+    <Compile Include="Subject.cs" />
+    <Compile Include="Task.cs" />
+    <Compile Include="task_allowed_operations.cs" />
+    <Compile Include="task_allowed_operations_helper.cs" />
+    <Compile Include="task_status_type.cs" />
+    <Compile Include="task_status_type_helper.cs" />
+    <Compile Include="Tunnel.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserDetails.cs" />
+    <Compile Include="VBD.cs" />
+    <Compile Include="VBD_metrics.cs" />
+    <Compile Include="vbd_mode.cs" />
+    <Compile Include="vbd_mode_helper.cs" />
+    <Compile Include="vbd_operations.cs" />
+    <Compile Include="vbd_operations_helper.cs" />
+    <Compile Include="vbd_type.cs" />
+    <Compile Include="vbd_type_helper.cs" />
+    <Compile Include="VDI.cs" />
+    <Compile Include="vdi_operations.cs" />
+    <Compile Include="vdi_operations_helper.cs" />
+    <Compile Include="vdi_type.cs" />
+    <Compile Include="vdi_type_helper.cs" />
+    <Compile Include="VGPU.cs" />
+    <Compile Include="VIF.cs" />
+    <Compile Include="vif_locking_mode.cs" />
+    <Compile Include="vif_locking_mode_helper.cs" />
+    <Compile Include="VIF_metrics.cs" />
+    <Compile Include="vif_operations.cs" />
+    <Compile Include="vif_operations_helper.cs" />
+    <Compile Include="VLAN.cs" />
+    <Compile Include="VM.cs" />
+    <Compile Include="VMPP.cs" />
+    <Compile Include="vmpp_archive_frequency.cs" />
+    <Compile Include="vmpp_archive_frequency_helper.cs" />
+    <Compile Include="vmpp_archive_target_type.cs" />
+    <Compile Include="vmpp_archive_target_type_helper.cs" />
+    <Compile Include="vmpp_backup_frequency.cs" />
+    <Compile Include="vmpp_backup_frequency_helper.cs" />
+    <Compile Include="vmpp_backup_type.cs" />
+    <Compile Include="vmpp_backup_type_helper.cs" />
+    <Compile Include="VM_appliance.cs" />
+    <Compile Include="vm_appliance_operation.cs" />
+    <Compile Include="vm_appliance_operation_helper.cs" />
+    <Compile Include="VM_guest_metrics.cs" />
+    <Compile Include="VM_metrics.cs" />
+    <Compile Include="vm_operations.cs" />
+    <Compile Include="vm_operations_helper.cs" />
+    <Compile Include="vm_power_state.cs" />
+    <Compile Include="vm_power_state_helper.cs" />
+    <Compile Include="VTPM.cs" />
+    <Compile Include="XenRef`1.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FriendlyErrorNames.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
